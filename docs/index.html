@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Smart Home IoT - IUH</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f3f4f6;
+      color: #111827;
+      margin: 0;
+      overflow-x: hidden;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .page-inner {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 12px 24px;
+      box-sizing: border-box;
+    }
+
+    /* ===== HEADER TRÊN ===== */
+    .top-header {
+      background: #ffffff;
+      border-bottom: 3px solid #e5e7eb;
+      padding: 10px 16px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .top-logo {
+      height: 54px;
+      width: auto;
+    }
+
+    .top-text {
+      text-align: left;
+    }
+
+    .school-name {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #1f2937;
+      text-transform: uppercase;
+    }
+
+    .project-name {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #b91c1c;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    .sub-line {
+      font-size: 0.8rem;
+      color: #4b5563;
+      margin-top: 4px;
+    }
+
+    /* ===== LAYOUT DƯỚI ===== */
+    .layout {
+      flex: 1;
+      display: flex;
+      min-height: 0;
+    }
+
+    .sidebar {
+      width: 220px;
+      background: #ffffff;
+      border-right: 1px solid #e5e7eb;
+      padding: 16px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .nav-title {
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      color: #6b7280;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .nav-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font-size: 0.9rem;
+      color: #111827;
+      text-align: left;
+      transition: background 0.15s ease, transform 0.1s ease;
+    }
+
+    .nav-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      background: #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+    }
+
+    .nav-item:hover {
+      background: #e5e7eb;
+      transform: translateX(2px);
+    }
+
+    .nav-item.active {
+      background: #16a34a;
+      color: #ffffff;
+    }
+
+    .nav-item.active .nav-icon {
+      background: #ffffff;
+      color: #16a34a;
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+
+    .sidebar-footer strong {
+      color: #111827;
+    }
+
+    /* ===== CONTENT ===== */
+    .content {
+      flex: 1;
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .content-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .content-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #111827;
+    }
+
+    .content-subtitle {
+      font-size: 0.85rem;
+      color: #6b7280;
+      margin-top: 2px;
+    }
+
+    .badge {
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      background: #e5e7eb;
+      color: #111827;
+      white-space: nowrap;
+    }
+    .badge.online { color: #16a34a; }
+    .badge.offline { color: #b91c1c; }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-top: 6px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 14px 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+      border: 1px solid #e5e7eb;
+    }
+
+    .card-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+      color: #4b5563;
+      font-weight: 500;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #f3f4f6;
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #22c55e;
+    }
+
+    .card-main {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #111827;
+    }
+
+    .card-desc {
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    /* Icon nhỏ trong title */
+    .card-title-icon {
+      margin-right: 6px;
+      font-size: 1.1rem;
+      vertical-align: -2px;
+    }
+
+    /* Danh sách trạng thái từng đèn trên Dashboard */
+    .light-list {
+      list-style: none;
+      margin: 6px 0 0 0;
+      padding: 0;
+    }
+
+    .light-item {
+      display: flex;
+      align-items: center;
+      font-size: 0.85rem;
+      color: #4b5563;
+      margin-top: 2px;
+    }
+
+    .light-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #9ca3af; /* xám = tắt */
+      margin-right: 6px;
+    }
+
+    .light-item.on .light-dot {
+      background: #16a34a; /* xanh = bật */
+    }
+
+    .light-room {
+      min-width: 120px;
+      font-weight: 500;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      color: #111827;
+      margin-right: 6px;
+    }
+
+    /* Icon cho nhiệt độ & độ ẩm */
+    .sensor-emoji {
+      font-size: 1.2rem;
+      margin-right: 4px;
+      vertical-align: -2px;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .btn {
+      flex: 1;
+      min-width: 90px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: none;
+      font-size: 0.85rem;
+      cursor: pointer;
+      background: #e5e7eb;
+      color: #111827;
+      transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+    }
+
+    .btn-primary {
+      background: #16a34a;
+      color: #f9fafb;
+      font-weight: 600;
+      box-shadow: 0 8px 18px rgba(22,163,74,0.35);
+    }
+
+    .btn-danger {
+      background: #dc2626;
+      color: #fee2e2;
+      font-weight: 600;
+      box-shadow: 0 8px 18px rgba(220,38,38,0.35);
+    }
+
+    .btn:active {
+      transform: scale(0.97);
+      box-shadow: none;
+    }
+
+    .sensor-value {
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: #111827;
+    }
+
+    .sensor-unit {
+      font-size: 0.9rem;
+      color: #6b7280;
+      margin-left: 4px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .switch-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .switch {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .switch-label {
+      min-width: 60px;
+    }
+
+    .switch-track {
+      width: 44px;
+      height: 22px;
+      border-radius: 999px;
+      background: #e5e7eb;
+      position: relative;
+      transition: background 0.15s ease;
+    }
+
+    .switch-thumb {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      background: #ffffff;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+      transition: transform 0.15s ease;
+    }
+
+    .switch.on .switch-track {
+      background: #16a34a;
+    }
+
+    .switch.on .switch-thumb {
+      transform: translateX(22px);
+    }
+
+    .view-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin: 4px 0 10px;
+    }
+
+    /* --- Firebase Auth (minimal UI) --- */
+    .auth-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .auth-form {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .auth-input {
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid #e5e7eb;
+      font-size: 0.85rem;
+      min-width: 160px;
+      outline: none;
+      background: #ffffff;
+      color: #111827;
+    }
+
+    .auth-btn {
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: none;
+      font-size: 0.85rem;
+      cursor: pointer;
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+    .auth-btn.primary {
+      background: #16a34a;
+      color: #f9fafb;
+      font-weight: 600;
+    }
+
+    .auth-btn.danger {
+      background: #dc2626;
+      color: #fee2e2;
+      font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+      .layout {
+        flex-direction: column;
+      }
+      .sidebar {
+        width: 100%;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .sidebar-footer {
+        display: none;
+      }
+      .nav-title {
+        display: none;
+      }
+      .nav-list {
+        flex-direction: row;
+        gap: 4px;
+      }
+      .nav-item {
+        font-size: 0.8rem;
+        padding: 6px 8px;
+      }
+      .content {
+        padding: 12px;
+      }
+      .auth-input { min-width: 140px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="top-header">
+      <img
+        src="https://upload.wikimedia.org/wikipedia/commons/1/13/Logo_PTIT_University.png"
+        alt="PTIT Logo"
+        class="top-logo"
+      />
+      <div class="top-text">
+        <div class="school-name">HỌC VIỆN CÔNG NGHỆ BƯU CHÍNH VIỄN THÔNG CƠ SỞ TP.HỒ CHÍ MINH</div>
+        <div class="project-name">SMART HOME IoT</div>
+        <div class="sub-line">Bảng điều khiển thiết bị thông minh dùng ESP32</div>
+      </div>
+    </header>
+
+    <div class="layout">
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+        <div>
+          <div class="nav-title">Điều hướng</div>
+          <div class="nav-list">
+            <button class="nav-item active" onclick="showView('dashboard')">
+              <div class="nav-icon">🏠</div>
+              <span>Dashboard</span>
+            </button>
+            <button class="nav-item" onclick="showView('door')">
+              <div class="nav-icon">🚪</div>
+              <span>Cửa ra vào</span>
+            </button>
+            <button class="nav-item" onclick="showView('lights')">
+              <div class="nav-icon">💡</div>
+              <span>Đèn chiếu sáng</span>
+            </button>
+            <button class="nav-item" onclick="showView('sensor')">
+              <div class="nav-icon">📡</div>
+              <span>Cảm biến</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="sidebar-footer">
+          <div><strong>Remote:</strong> Firebase RTDB</div>
+          <div><strong>Auth:</strong> <span id="auth-state">checking...</span></div>
+        </div>
+      </aside>
+
+      <!-- CONTENT -->
+      <main class="content">
+        <div class="content-header">
+          <div>
+            <div class="content-title">Smart Home Dashboard</div>
+            <div class="content-subtitle">Giám sát & điều khiển thiết bị</div>
+          </div>
+
+          <div class="auth-wrap">
+            <span id="wifi-badge" class="badge offline">WiFi: checking...</span>
+            <span id="auth-badge" class="badge offline">Auth: checking...</span>
+            <form id="auth-form" class="auth-form" autocomplete="on">
+              <input id="auth-email" class="auth-input" type="email" placeholder="Email" />
+              <input id="auth-pass" class="auth-input" type="password" placeholder="Password" />
+              <button id="login-btn" class="auth-btn primary" type="submit">Đăng nhập</button>
+              <button id="logout-btn" class="auth-btn danger hidden" type="button">Đăng xuất</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- VIEW: DASHBOARD -->
+        <section id="view-dashboard" class="view">
+          <div class="cards-grid">
+            <!-- Cửa -->
+            <div class="card">
+              <div class="card-title">
+                <span><span class="card-title-icon">🚪</span>Cửa ra vào</span>
+                <span class="pill" id="door-state-pill">Đang đóng</span>
+              </div>
+              <div class="card-main" id="door-state-text-dashboard">
+                Cửa đang đóng
+              </div>
+              <div class="card-desc">
+                Xem nhanh trạng thái cửa (mở / đóng). Điều khiển tại tab "Cửa ra vào".
+              </div>
+            </div>
+
+            <!-- Đèn -->
+            <div class="card">
+              <div class="card-title">
+                <span><span class="card-title-icon">💡</span>Đèn chiếu sáng</span>
+                <span class="pill">5 kênh LED</span>
+              </div>
+              <div class="card-main" id="lights-summary">
+                ...
+              </div>
+              <div class="card-desc">
+                <ul class="light-list">
+                  <li class="light-item" id="light-item-1">
+                    <span class="light-dot"></span>
+                    <span class="light-room">PHÒNG KHÁCH</span>
+                    <span id="light-status-1">--</span>
+                  </li>
+                  <li class="light-item" id="light-item-2">
+                    <span class="light-dot"></span>
+                    <span class="light-room">PHÒNG NGỦ</span>
+                    <span id="light-status-2">--</span>
+                  </li>
+                  <li class="light-item" id="light-item-3">
+                    <span class="light-dot"></span>
+                    <span class="light-room">NHÀ BẾP</span>
+                    <span id="light-status-3">--</span>
+                  </li>
+                  <li class="light-item" id="light-item-4">
+                    <span class="light-dot"></span>
+                    <span class="light-room">NHÀ VỆ SINH</span>
+                    <span id="light-status-4">--</span>
+                  </li>
+                  <li class="light-item" id="light-item-5">
+                    <span class="light-dot"></span>
+                    <span class="light-room">PHÒNG LÀM VIỆC</span>
+                    <span id="light-status-5">--</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Cảm biến nhiệt độ / độ ẩm -->
+            <div class="card">
+              <div class="card-title">
+                <span><span class="card-title-icon">🌡</span>Cảm biến nhiệt độ / độ ẩm</span>
+                <span class="pill">DHT11</span>
+              </div>
+              <div class="card-main">
+                <span class="sensor-emoji">🌡</span>
+                <span id="temp-val-dashboard" class="sensor-value">--</span>
+                <span class="sensor-unit">°C</span>
+
+                <span style="margin-left:20px;"></span>
+
+                <span class="sensor-emoji">💧</span>
+                <span id="hum-val-dashboard" class="sensor-value">--</span>
+                <span class="sensor-unit">%</span>
+              </div>
+              <div class="card-desc" id="sensor-desc-dashboard">
+                Đang đọc dữ liệu...
+              </div>
+            </div>
+
+            <!-- Hệ thống -->
+            <div class="card">
+              <div class="card-title">
+                <span>Hệ thống</span>
+                <span class="pill">ESP32</span>
+              </div>
+              <div class="card-main" id="sys-status">Đang cập nhật...</div>
+              <div class="card-desc" id="sys-extra">IP: đang đọc...</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- VIEW: CỬA RA VÀO -->
+        <section id="view-door" class="view hidden">
+          <h2 class="view-title">Cửa ra vào</h2>
+          <div class="card">
+            <div class="card-title">
+              <span>Điều khiển cửa</span>
+              <span class="pill">
+                Trạng thái: <span id="door-state-text">Đang đóng</span>
+              </span>
+            </div>
+
+            <div class="card-main">
+              Mở/đóng cửa bằng servo.
+            </div>
+            <div class="card-desc">
+              Sử dụng nút hoặc kéo thanh trượt để đặt góc (0°–180°).
+            </div>
+
+            <!-- Nút mở / đóng nhanh -->
+            <div class="btn-row" style="margin-top:8px;">
+              <button class="btn btn-primary" onclick="gateOpen()">Mở cửa</button>
+              <button class="btn btn-danger" onclick="gateClose()">Đóng cửa</button>
+            </div>
+
+            <!-- Thanh trượt góc servo -->
+            <div style="margin-top:16px;">
+              <label for="servo-slider" class="card-desc">
+                Góc servo hiện tại:
+                <strong><span id="servo-angle-text">0</span>°</strong>
+              </label>
+              <input
+                id="servo-slider"
+                type="range"
+                min="0"
+                max="180"
+                value="0"
+                oninput="onServoSliderChange(this.value)"
+                style="width:100%; margin-top:8px;"
+              />
+              <div style="margin-top:4px; font-size:0.85rem;">
+                Góc đang chọn: <span id="servo-slider-value">0</span>°
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- VIEW: ĐÈN CHIẾU SÁNG -->
+        <section id="view-lights" class="view hidden">
+          <h2 class="view-title">Đèn chiếu sáng</h2>
+          <div class="card">
+            <div class="card-title">
+              <span>Điều khiển đèn</span>
+              <span class="pill">5 kênh LED</span>
+            </div>
+            <div class="card-main">
+              Nút gạt bật/tắt đèn.
+            </div>
+            <div class="switch-row">
+              <div class="switch" data-led="1" onclick="toggleLed(this)">
+                <span class="switch-label">PHÒNG KHÁCH</span>
+                <div class="switch-track"><div class="switch-thumb"></div></div>
+              </div>
+              <div class="switch" data-led="2" onclick="toggleLed(this)">
+                <span class="switch-label">PHÒNG NGỦ</span>
+                <div class="switch-track"><div class="switch-thumb"></div></div>
+              </div>
+              <div class="switch" data-led="3" onclick="toggleLed(this)">
+                <span class="switch-label">NHÀ BẾP</span>
+                <div class="switch-track"><div class="switch-thumb"></div></div>
+              </div>
+              <div class="switch" data-led="4" onclick="toggleLed(this)">
+                <span class="switch-label">NHÀ VỆ SINH</span>
+                <div class="switch-track"><div class="switch-thumb"></div></div>
+              </div>
+              <div class="switch" data-led="5" onclick="toggleLed(this)">
+                <span class="switch-label">PHÒNG LÀM VIỆC</span>
+                <div class="switch-track"><div class="switch-thumb"></div></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- VIEW: CẢM BIẾN -->
+        <section id="view-sensor" class="view hidden">
+          <h2 class="view-title">Cảm biến</h2>
+          <div class="card">
+            <div class="card-title">
+              <span>Nhiệt độ & độ ẩm</span>
+              <span class="pill">DHT11</span>
+            </div>
+            <div class="card-main">
+              <div style="margin-bottom:8px;">
+                <span class="sensor-emoji">🌡</span>
+                <span id="temp-val-detail" class="sensor-value">--</span>
+                <span class="sensor-unit">°C</span>
+              </div>
+              <div>
+                <span class="sensor-emoji">💧</span>
+                <span id="hum-val-detail" class="sensor-value">--</span>
+                <span class="sensor-unit">%</span>
+              </div>
+            </div>
+            <div class="card-desc" id="sensor-desc-detail">
+              Đang đọc dữ liệu...
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="config.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

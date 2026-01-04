@@ -48,6 +48,10 @@ Thumbs.db
 # Logs
 *.log
 
+# Firebase
+.firebase/
+firebase-debug.log
+
 # Temporary files
 *.tmp
 *.bak

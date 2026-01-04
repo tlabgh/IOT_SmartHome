@@ -31,6 +31,24 @@ IOT_SmartHome/
 └── README.md                # File này
 ```
 
+## 🌐 Web điều khiển từ xa (GitHub Pages)
+
+Web dashboard remote được đặt tại thư mục `docs/` (static site). Phần web vẫn dùng **Firebase Realtime Database + Firebase Auth**, chỉ thay phần **hosting** (không dùng Firebase Hosting nữa).
+
+### Bật GitHub Pages
+1. Push code lên GitHub (repo public hoặc private tuỳ gói GitHub của bạn).
+2. Vào **Settings → Pages**
+3. **Build and deployment**:
+  - Source: **Deploy from a branch**
+  - Branch: `main` (hoặc `master`)
+  - Folder: `/docs`
+4. Đợi 1–2 phút, GitHub sẽ cấp URL dạng: `https://<username>.github.io/<repo>/`
+
+### Lưu ý
+- Muốn đăng nhập điều khiển: tạo user trong Firebase Console → Authentication → Users (Email/Password).
+- `docs/config.js` đã chứa cấu hình Firebase web + `espBasePath = "esp32_1"`.
+
+
 ## 🚀 Hướng dẫn cài đặt
 
 ### 1️⃣ Setup ESP32
@@ -272,6 +290,72 @@ Voice Assistant hỗ trợ 18 intents + **Lệnh kép**:
 ### Model AI không chính xác?
 - Retrain model: `python train_simple.py`
 - Thêm training data vào `intents.json`
+
+## 🌐 Điều khiển từ xa (Firebase Hosting + Realtime Database)
+
+ESP32 đã hỗ trợ đồng bộ trạng thái lên Firebase và nhận lệnh điều khiển từ Firebase:
+
+- **Trạng thái**: `/esp32_1` (ESP32 tự cập nhật định kỳ)
+- **Lệnh**: `/esp32_1/cmd` (Web ghi lệnh, ESP32 đọc xong sẽ xoá)
+
+Web dashboard nằm trong thư mục `Firebase_Web/`.
+
+### 1) Tạo Firebase Project
+
+1. Firebase Console → tạo Project
+2. Bật **Realtime Database**
+3. Tạo **Web App** để lấy cấu hình Web SDK
+
+### 1.1) Bật đăng nhập (Firebase Auth)
+
+Để an toàn hơn (chỉ người đã đăng nhập mới điều khiển):
+
+1. Firebase Console → **Authentication** → **Get started**
+2. **Sign-in method** → bật **Email/Password**
+3. Tạo user cho các thành viên nhóm (tab **Users**)
+
+### 1.2) Realtime Database Rules (gợi ý)
+
+Gợi ý rules để:
+- **ESP32** vẫn sync trạng thái (dùng legacy token)
+- **Web** chỉ được **ghi lệnh** khi đã đăng nhập
+
+```json
+{
+  "rules": {
+    "esp32_1": {
+      ".read": true,
+      "cmd": {
+        ".read": "auth != null",
+        ".write": "auth != null"
+      }
+    }
+  }
+}
+```
+
+### 2) Cấu hình Web
+
+- Mở `Firebase_Web/public/config.js` và điền `window.firebaseConfig`
+
+### 3) Chạy thử local
+
+```powershell
+cd Firebase_Web
+npm i -g firebase-tools
+firebase login
+firebase serve
+```
+
+### 4) Deploy public
+
+```powershell
+cd Firebase_Web
+firebase use --add
+firebase deploy --only hosting
+```
+
+Sau khi deploy, bạn sẽ có link dạng: `https://<project-id>.web.app`
 
 ## 📝 License
 
