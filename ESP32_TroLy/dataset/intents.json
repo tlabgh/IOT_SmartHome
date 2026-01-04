@@ -384,6 +384,32 @@
       "responses": [
         "Đang kiểm tra trạng thái hệ thống..."
       ]
+    },
+    {
+      "tag": "get_ip",
+      "patterns": [
+        "địa chỉ ip là bao nhiêu",
+        "ip là gì",
+        "cho tôi biết địa chỉ ip",
+        "ip address",
+        "địa chỉ ip",
+        "ip của esp32",
+        "ip esp32 là gì",
+        "cho biết ip",
+        "xem ip",
+        "kiểm tra ip",
+        "ip bao nhiêu",
+        "địa chỉ ip bao nhiêu",
+        "cho tôi xem địa chỉ ip",
+        "esp32 có ip là bao nhiêu",
+        "ip của thiết bị",
+        "địa chỉ ip thiết bị"
+      ],
+      "action": "get_ip",
+      "responses": [
+        "Đang kiểm tra địa chỉ IP...",
+        "Để tôi xem địa chỉ IP"
+      ]
     }
   ]
 }

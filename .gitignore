@@ -1,3 +1,7 @@
+# Firebase Service Account Keys (QUAN TRỌNG - KHÔNG COMMIT!)
+ESP32_TroLy/serviceAccountKey.json
+ESP32_TroLy/*-firebase-adminsdk-*.json
+
 # Python
 __pycache__/
 *.py[cod]
@@ -40,6 +44,10 @@ Thumbs.db
 *.swp
 *.swo
 *~
+
+# Audio temp files
+*.mp3
+*.wav
 
 # Models (uncomment nếu file quá lớn)
 # ESP32_TroLy/models/*.pkl

@@ -184,12 +184,20 @@ class IntentClassifierSVM:
 
 
 if __name__ == '__main__':
-    # simple test helper
+    # Train model
     base_dir = Path(__file__).parent
     intents_file = base_dir / 'dataset' / 'intents.json'
+    model_dir = base_dir / 'models'
+    
+    print("🔄 Training model with new intents...")
     classifier = IntentClassifierSVM()
-    classifier.load('../models')
-    tests = ['bật đèn phòng khách','tắt hết đèn','mở cửa','nhiệt độ bao nhiêu']
+    classifier.train(intents_file)
+    classifier.save(model_dir)
+    print("✅ Model trained and saved!")
+    
+    # Test
+    print("\n🧪 Testing predictions:")
+    tests = ['bật đèn phòng khách','tắt hết đèn','mở cửa','nhiệt độ bao nhiêu','địa chỉ ip là bao nhiêu']
     for t in tests:
         intent, conf = classifier.predict(t)
-        print(t, '->', intent, conf)
+        print(f"  '{t}' -> {intent} ({conf:.1f}%)")

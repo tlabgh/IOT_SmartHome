@@ -21,7 +21,8 @@ IOT_SmartHome/
 │       └── ESP32_SmartHome.cpp  # Code chính ESP32
 │
 ├── ESP32_TroLy/             # Voice Assistant AI
-│   ├── voice_assistant.py   # Trợ lý giọng nói chính
+│   ├── voice_assistant.py   # Trợ lý giọng nói (LOCAL - HTTP)
+│   ├── voice_assistant_firebase.py  # 🔥 Trợ lý giọng nói (REMOTE - Firebase)
 │   ├── train_simple.py      # Training model SVM
 │   ├── test_svm.py          # Test accuracy model
 │   ├── test_comprehensive.py  # Test tổng hợp
@@ -197,6 +198,61 @@ pipwin install pyaudio
 3. Đợi xử lý (nhận dạng → phân loại intent → gửi lệnh ESP32)
 4. Nghe phản hồi giọng nói
 5. Lặp lại từ bước 2
+
+#### 🔥 NEW: Voice Assistant Remote (Firebase)
+
+**Điều khiển từ xa không cần cùng mạng WiFi:**
+
+```powershell
+# Cài thêm Firebase Admin SDK
+pip install firebase-admin
+
+# Chạy version Firebase
+python voice_assistant_firebase.py
+```
+
+**Ưu điểm:**
+- ✅ Điều khiển từ mọi nơi (không cần cùng WiFi với ESP32)
+- ✅ Không cần biết IP ESP32 (ESP32 đổi IP/mạng vẫn hoạt động)
+- ✅ An toàn hơn (Firebase Authentication)
+- ✅ Có thể log lịch sử lệnh
+
+**Setup Firebase Service Account Key:**
+
+1. **Lấy Service Account Key:**
+   - Vào https://console.firebase.google.com/
+   - Chọn project `iot-smarthome-d03a9`
+   - ⚙️ Settings → Project settings → Service accounts
+   - Click **Generate new private key** → Download file JSON
+   - Đổi tên thành `serviceAccountKey.json`
+   - Chuyển vào thư mục `ESP32_TroLy/`
+
+2. **Chạy Voice Assistant Firebase:**
+   ```powershell
+   cd ESP32_TroLy
+   python voice_assistant_firebase.py
+   ```
+   
+   Nhập thông tin khi được hỏi:
+   - Service Account Key: `serviceAccountKey.json`
+   - Database URL: Enter (dùng default)
+   - ESP32 base path: Enter (dùng `esp32_1`)
+
+3. **Lưu ý bảo mật:**
+   - ⚠️ File `serviceAccountKey.json` chứa credentials quan trọng
+   - ⚠️ **KHÔNG** commit file này lên GitHub
+   - ⚠️ Đã thêm vào `.gitignore`
+
+**So sánh Local vs Remote:**
+
+| Tính năng | Local (HTTP) | Firebase (Remote) |
+|-----------|--------------|-------------------|
+| **Cần cùng WiFi** | ✅ Bắt buộc | ❌ Không cần |
+| **Biết IP ESP32** | ✅ Bắt buộc | ❌ Không cần |
+| **Điều khiển từ xa** | ❌ Không được | ✅ Mọi nơi |
+| **ESP32 đổi IP** | ❌ Phải cập nhật | ✅ Không ảnh hưởng |
+| **Độ trễ** | 🚀 <100ms | ⏱️ ~1-2s |
+| **Internet** | ❌ Không cần | ✅ Bắt buộc |
 
 #### Test hệ thống:
 ```powershell
@@ -442,10 +498,11 @@ Voice Assistant hỗ trợ 18 intents + **Lệnh kép**:
 ```
 
 ### Luồng hoạt động:
-1. **Local Control**: Voice Assistant → HTTP REST → ESP32 (trực tiếp)
-2. **Remote Control**: Web Dashboard → Firebase → ESP32 (qua cloud)
-3. **State Sync**: ESP32 → Firebase (mỗi 5s) → Web Dashboard (realtime)
-4. **Sensor Data**: DHT11 → ESP32 → Firebase → Web/Voice (mỗi 2s đọc sensor)
+1. **Local Control (voice_assistant.py)**: Voice Assistant → HTTP REST → ESP32 (trực tiếp, cần cùng WiFi)
+2. **Remote Control (voice_assistant_firebase.py)**: Voice Assistant → Firebase → ESP32 (từ xa, không cần cùng WiFi)
+3. **Web Remote Control**: Web Dashboard → Firebase → ESP32 (qua cloud)
+4. **State Sync**: ESP32 → Firebase (mỗi 5s) → Web Dashboard (realtime)
+5. **Sensor Data**: DHT11 → ESP32 → Firebase → Web/Voice (mỗi 2s đọc sensor)
 
 ## 🐛 Troubleshooting
 
@@ -511,7 +568,12 @@ Voice Assistant hỗ trợ 18 intents + **Lệnh kép**:
 ### 2. Test Voice Assistant:
 ```powershell
 cd ESP32_TroLy
+
+# LOCAL (cần cùng WiFi):
 python voice_assistant.py <ESP32_IP>
+
+# 🔥 REMOTE (điều khiển từ xa):
+python voice_assistant_firebase.py
 
 # Thử các lệnh:
 - "Bật đèn phòng khách"
@@ -539,7 +601,223 @@ python voice_assistant.py <ESP32_IP>
 4. ESP32 nhận lệnh → cmd bị xóa → state cập nhật
 ```
 
-## 📝 License
+## � Hướng phát triển (Future Improvements)
+
+### 🔥 Ưu tiên cao (Khả thi ngay):
+
+#### ~~1. Voice Assistant điều khiển từ xa qua Firebase~~ ✅ ĐÃ HOÀN THÀNH!
+**Trạng thái:** Đã implement trong `voice_assistant_firebase.py`
+
+**Tính năng:**
+- ✅ Gửi lệnh qua Firebase Realtime Database
+- ✅ Không cần biết IP ESP32 (ESP32 đổi IP/mạng vẫn hoạt động)
+- ✅ Điều khiển từ mọi nơi có internet
+- ✅ Hỗ trợ lệnh đơn và lệnh kép
+- ✅ Đọc trạng thái sensor từ Firebase
+
+**Cách dùng:**
+```powershell
+pip install firebase-admin
+python voice_assistant_firebase.py
+```
+
+#### 2. Lịch hẹn giờ (Schedule Automation)
+Tự động bật/tắt thiết bị theo thời gian:
+```python
+# Ví dụ: Bật đèn phòng khách 18:00, tắt 22:00
+schedule_rules = [
+    {"time": "18:00", "device": "led1", "action": "on"},
+    {"time": "22:00", "device": "led1", "action": "off"}
+]
+```
+
+**Tech stack:** Python APScheduler hoặc Firebase Cloud Functions
+
+#### 3. Thông báo Push Notification
+Nhận thông báo khi:
+- Nhiệt độ/độ ẩm vượt ngưỡng
+- Cửa mở bất thường
+- ESP32 mất kết nối
+
+**Tech stack:** Firebase Cloud Messaging (FCM)
+
+#### 4. OTA Firmware Update
+Cập nhật firmware ESP32 qua WiFi (không cần cáp USB):
+```cpp
+// Arduino OTA hoặc HTTP Update
+#include <ArduinoOTA.h>
+ArduinoOTA.begin();
+```
+
+### 💡 Mở rộng Hardware:
+
+#### 5. Camera giám sát (ESP32-CAM)
+- Stream video real-time
+- Motion detection
+- Chụp ảnh khi có chuyển động
+
+#### 6. Cảm biến chuyển động (PIR Sensor)
+- Tự động bật đèn khi phát hiện người
+- Gửi cảnh báo khi có chuyển động bất thường
+
+#### 7. Cảm biến khí gas (MQ-2)
+- Phát hiện rò rỉ gas
+- Cảnh báo nguy hiểm
+- Tự động tắt thiết bị
+
+#### 8. Đo công suất điện (PZEM-004T)
+- Giám sát tiêu thụ điện real-time
+- Thống kê hóa đơn điện
+- Cảnh báo quá tải
+
+### 🤖 Nâng cấp AI:
+
+#### 9. Deep Learning Model (thay SVM)
+- **LSTM/GRU**: Xử lý ngữ cảnh câu dài hơn
+- **BERT Vietnamese**: Hiểu ngữ nghĩa sâu hơn
+- **Accuracy**: 95% → 98%+
+
+**Tech stack:** TensorFlow, PyTorch, PhoBERT
+
+#### 10. Offline Voice Recognition
+Nhận dạng giọng nói không cần internet:
+- **Vosk**: Lightweight, chạy local
+- **PocketSphinx**: Hỗ trợ tiếng Việt
+- **Whisper (OpenAI)**: Độ chính xác cao
+
+#### 11. Wake Word Detection
+Kích hoạt bằng từ khóa (như "Hey Google"):
+```python
+# Ví dụ: "Xin chào trợ lý" → bắt đầu lắng nghe
+import pvporcupine  # Picovoice Porcupine
+```
+
+#### 12. Natural Language Generation
+Phản hồi thông minh hơn:
+- Thay vì "Đã bật đèn" → "Đã bật đèn phòng khách cho bạn, nhiệt độ hiện tại 25°C"
+- Context-aware responses
+
+### 🌐 Web & Mobile:
+
+#### 13. Progressive Web App (PWA)
+- Cài đặt như app native
+- Offline support
+- Push notifications
+- Add to home screen
+
+#### 14. Mobile App (React Native / Flutter)
+- Native iOS/Android app
+- Biometric authentication (Face ID, fingerprint)
+- Widget home screen
+- Siri/Google Assistant integration
+
+#### 15. Multi ESP32 Support
+Quản lý nhiều phòng/nhà:
+```
+/home1/esp32_1  → Nhà chính
+/home1/esp32_2  → Tầng 2
+/home2/esp32_1  → Nhà phụ
+```
+
+### 🔐 Bảo mật & Hiệu suất:
+
+#### 16. MQTT Protocol (thay HTTP polling)
+- Realtime bidirectional communication
+- Tiết kiệm băng thông
+- Reliable message delivery
+
+**Tech stack:** Mosquitto MQTT Broker, HiveMQ
+
+#### 17. WebSocket cho Dashboard
+- Realtime updates (không cần refresh)
+- Tốc độ nhanh hơn Firebase polling
+
+#### 18. End-to-End Encryption
+- Mã hóa dữ liệu giữa ESP32 ↔ Firebase
+- TLS/SSL certificates
+- API key rotation
+
+#### 19. User Management System
+- Multi-user support
+- Role-based access (admin, user, guest)
+- Activity logs
+
+### 📊 Analytics & Monitoring:
+
+#### 20. Dashboard Analytics
+- Biểu đồ tiêu thụ điện
+- Thống kê sử dụng thiết bị
+- Xu hướng nhiệt độ/độ ẩm theo thời gian
+- Export data CSV/Excel
+
+**Tech stack:** Chart.js, Plotly, Firebase Analytics
+
+#### 21. Machine Learning Automation
+Học thói quen người dùng:
+- Tự động bật đèn khi về nhà (dựa vào lịch sử)
+- Điều chỉnh nhiệt độ phòng theo thời tiết
+- Dự đoán tiêu thụ điện tháng sau
+
+**Tech stack:** TensorFlow, Prophet (time series forecasting)
+
+#### 22. Integration với Smart Home Ecosystems
+- **Google Home**: "Ok Google, bật đèn phòng khách"
+- **Amazon Alexa**: "Alexa, turn off bedroom light"
+- **Apple HomeKit**: Siri control
+- **IFTTT**: If temp > 30°C then turn on fan
+
+### 🏗️ Kiến trúc nâng cao:
+
+#### 23. Microservices Architecture
+Tách thành các service độc lập:
+- Auth Service
+- Device Control Service
+- Analytics Service
+- Notification Service
+
+**Tech stack:** Docker, Kubernetes
+
+#### 24. Edge Computing
+Xử lý dữ liệu tại ESP32 (không cần cloud):
+- TensorFlow Lite cho ESP32
+- Local AI inference
+- Giảm latency
+
+#### 25. Blockchain cho IoT Security
+- Immutable device logs
+- Secure firmware updates
+- Decentralized control
+
+---
+
+### 📝 Roadmap đề xuất:
+
+**Phase 1 (1-2 tuần):** ✅ Đã hoàn thành
+- ✅ ESP32 basic control
+- ✅ Voice Assistant local
+- ✅ **Voice Assistant Firebase remote** 🔥 NEW!
+- ✅ Firebase sync
+- ✅ Web dashboard
+
+**Phase 2 (Tiếp theo - 2 tuần):**
+- [ ] ~~Voice Assistant qua Firebase (remote control)~~ ✅ Done!
+- [ ] Schedule automation
+- [ ] Push notifications
+- [ ] PWA web dashboard
+
+**Phase 3 (1 tháng):**
+- [ ] Mobile app
+- [ ] Camera module
+- [ ] PIR sensor
+- [ ] MQTT protocol
+
+**Phase 4 (Dài hạn):**
+- [ ] Deep Learning model
+- [ ] Multi-home support
+- [ ] Smart automation (ML)
+- [ ] Google Home integration
+
+## �📝 License
 
 MIT License - Đồ án môn học IoT và Ứng dụng. Sử dụng cho mục đích học tập và nghiên cứu.
 

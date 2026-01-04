@@ -7,3 +7,4 @@ scikit-learn
 numpy
 requests
 underthesea
+firebase-admin>=6.0.0
