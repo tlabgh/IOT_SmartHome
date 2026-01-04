@@ -445,7 +445,7 @@ def main():
         esp32_ip = sys.argv[1]
     else:
         # Try to read from config or prompt user
-        esp32_ip = input("Enter ESP32 IP address (e.g., 192.168.1.47): ").strip()
+        esp32_ip = input("Enter ESP32 IP address (e.g., 192.168.x.x): ").strip()
     
     if not esp32_ip:
         print("❌ ESP32 IP address is required!")

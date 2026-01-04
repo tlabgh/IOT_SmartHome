@@ -63,8 +63,8 @@ int wifiMode;           // 0: cấu hình, 1: đã kết nối, 2: mất WiFi
 unsigned long blinkTime = millis();
 
 // ===== FIREBASE CONFIG =====
-#define FIREBASE_HOST "iot-smarthome-998dc-default-rtdb.asia-southeast1.firebasedatabase.app"
-#define FIREBASE_AUTH "AIzaSyDmV5OjJyKScIxkwVZnoeob4l4KXcdEQdw"
+#define FIREBASE_HOST "iot-smarthome-d03a9-default-rtdb.asia-southeast1.firebasedatabase.app"
+#define FIREBASE_AUTH "AIzaSyByP2XPL9NUEO33aYh7p3N67IeKjVG0YUA"
 #define FB_BASE_PATH  "/esp32_1"
 
 // Firebase objects
@@ -452,7 +452,7 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Smart Home IoT - IUH</title>
+  <title>Smart Home IoT - PTIT</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
