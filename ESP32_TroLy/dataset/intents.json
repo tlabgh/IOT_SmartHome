@@ -1,0 +1,389 @@
+{
+  "intents": [
+    {
+      "tag": "greeting",
+      "patterns": [
+        "xin chào",
+        "chào bạn",
+        "hello",
+        "hi",
+        "chào trợ lý"
+      ],
+      "responses": [
+        "Xin chào! Tôi có thể giúp gì cho bạn?",
+        "Chào bạn! Bạn cần điều khiển thiết bị gì?"
+      ]
+    },
+    {
+      "tag": "light_on_livingroom",
+      "patterns": [
+        "bật đèn phòng khách",
+        "mở đèn phòng khách",
+        "sáng đèn phòng khách",
+        "bật đèn ở phòng khách",
+        "bật led một",
+        "bật led 1",
+        "cho tôi bật đèn phòng khách",
+        "bật đèn phòng khách lên",
+        "mở đèn phòng khách giúp tôi",
+        "bật đèn phòng khách được không",
+        "bật đèn ở phòng khách lên",
+        "sáng đèn phòng khách lên",
+        "turn on living room light",
+        "bật living room",
+        "phòng khách bật đèn"
+      ],
+      "action": "led1_on",
+      "responses": [
+        "Đã bật đèn phòng khách",
+        "Đèn phòng khách đã sáng"
+      ]
+    },
+    {
+      "tag": "light_off_livingroom",
+      "patterns": [
+        "tắt đèn phòng khách",
+        "tắt đèn ở phòng khách",
+        "tắt led một",
+        "tắt led 1",
+        "tắt đèn living room",
+        "cho tôi tắt đèn phòng khách",
+        "tắt đèn phòng khách đi",
+        "tắt đèn phòng khách giúp tôi",
+        "tắt đèn phòng khách được không",
+        "tắt đèn ở phòng khách đi",
+        "turn off living room light",
+        "tắt living room",
+        "phòng khách tắt đèn"
+      ],
+      "action": "led1_off",
+      "responses": [
+        "Đã tắt đèn phòng khách",
+        "Đèn phòng khách đã tắt"
+      ]
+    },
+    {
+      "tag": "light_on_bedroom",
+      "patterns": [
+        "bật đèn phòng ngủ",
+        "mở đèn phòng ngủ",
+        "sáng đèn phòng ngủ",
+        "bật led hai",
+        "bật led 2",
+        "cho tôi bật đèn phòng ngủ",
+        "bật đèn phòng ngủ lên",
+        "mở đèn phòng ngủ giúp tôi",
+        "bật đèn ở phòng ngủ",
+        "sáng đèn phòng ngủ lên",
+        "turn on bedroom light",
+        "bật bedroom",
+        "phòng ngủ bật đèn"
+      ],
+      "action": "led2_on",
+      "responses": [
+        "Đã bật đèn phòng ngủ"
+      ]
+    },
+    {
+      "tag": "light_off_bedroom",
+      "patterns": [
+        "tắt đèn phòng ngủ",
+        "tắt led hai",
+        "tắt led 2",
+        "cho tôi tắt đèn phòng ngủ",
+        "tắt đèn phòng ngủ đi",
+        "tắt đèn phòng ngủ giúp tôi",
+        "tắt đèn ở phòng ngủ",
+        "turn off bedroom light",
+        "tắt bedroom",
+        "phòng ngủ tắt đèn"
+      ],
+      "action": "led2_off",
+      "responses": [
+        "Đã tắt đèn phòng ngủ"
+      ]
+    },
+    {
+      "tag": "light_on_kitchen",
+      "patterns": [
+        "bật đèn nhà bếp",
+        "mở đèn bếp",
+        "bật đèn kitchen",
+        "bật led ba",
+        "bật led 3",
+        "cho tôi bật đèn nhà bếp",
+        "bật đèn nhà bếp lên",
+        "sáng đèn nhà bếp",
+        "mở đèn nhà bếp giúp tôi",
+        "bật đèn ở nhà bếp",
+        "turn on kitchen light",
+        "bật đèn bếp",
+        "nhà bếp bật đèn"
+      ],
+      "action": "led3_on",
+      "responses": [
+        "Đã bật đèn nhà bếp"
+      ]
+    },
+    {
+      "tag": "light_off_kitchen",
+      "patterns": [
+        "tắt đèn nhà bếp",
+        "tắt đèn bếp",
+        "tắt led ba",
+        "tắt led 3",
+        "cho tôi tắt đèn nhà bếp",
+        "tắt đèn nhà bếp đi",
+        "tắt đèn nhà bếp giúp tôi",
+        "tắt đèn ở nhà bếp",
+        "turn off kitchen light",
+        "tắt kitchen",
+        "nhà bếp tắt đèn"
+      ],
+      "action": "led3_off",
+      "responses": [
+        "Đã tắt đèn nhà bếp"
+      ]
+    },
+    {
+      "tag": "light_on_bathroom",
+      "patterns": [
+        "bật đèn nhà vệ sinh",
+        "mở đèn toilet",
+        "bật đèn wc",
+        "bật led bốn",
+        "bật led 4",
+        "cho tôi bật đèn nhà vệ sinh",
+        "bật đèn nhà vệ sinh lên",
+        "sáng đèn nhà vệ sinh",
+        "mở đèn wc giúp tôi",
+        "bật đèn ở nhà vệ sinh",
+        "turn on bathroom light",
+        "bật đèn toilet",
+        "nhà vệ sinh bật đèn"
+      ],
+      "action": "led4_on",
+      "responses": [
+        "Đã bật đèn nhà vệ sinh"
+      ]
+    },
+    {
+      "tag": "light_off_bathroom",
+      "patterns": [
+        "tắt đèn nhà vệ sinh",
+        "tắt đèn toilet",
+        "tắt led bốn",
+        "tắt led 4",
+        "cho tôi tắt đèn nhà vệ sinh",
+        "tắt đèn nhà vệ sinh đi",
+        "tắt đèn wc giúp tôi",
+        "tắt đèn ở nhà vệ sinh",
+        "turn off bathroom light",
+        "tắt wc",
+        "nhà vệ sinh tắt đèn"
+      ],
+      "action": "led4_off",
+      "responses": [
+        "Đã tắt đèn nhà vệ sinh"
+      ]
+    },
+    {
+      "tag": "light_on_office",
+      "patterns": [
+        "bật đèn phòng làm việc",
+        "mở đèn office",
+        "sáng đèn làm việc",
+        "bật led năm",
+        "bật led 5",
+        "cho tôi bật đèn phòng làm việc",
+        "bật đèn phòng làm việc lên",
+        "mở đèn phòng làm việc giúp tôi",
+        "bật đèn ở phòng làm việc",
+        "sáng đèn phòng làm việc lên",
+        "turn on office light",
+        "bật office",
+        "phòng làm việc bật đèn"
+      ],
+      "action": "led5_on",
+      "responses": [
+        "Đã bật đèn phòng làm việc"
+      ]
+    },
+    {
+      "tag": "light_off_office",
+      "patterns": [
+        "tắt đèn phòng làm việc",
+        "tắt đèn office",
+        "tắt led năm",
+        "tắt led 5",
+        "cho tôi tắt đèn phòng làm việc",
+        "tắt đèn phòng làm việc đi",
+        "tắt đèn phòng làm việc giúp tôi",
+        "tắt đèn ở phòng làm việc",
+        "turn off office light",
+        "tắt office",
+        "phòng làm việc tắt đèn"
+      ],
+      "action": "led5_off",
+      "responses": [
+        "Đã tắt đèn phòng làm việc"
+      ]
+    },
+    {
+      "tag": "light_all_on",
+      "patterns": [
+        "bật tất cả đèn",
+        "bật hết đèn",
+        "mở toàn bộ đèn",
+        "sáng hết đèn",
+        "cho tôi bật tất cả đèn",
+        "bật hết đèn lên",
+        "mở hết đèn giúp tôi",
+        "bật toàn bộ đèn",
+        "sáng tất cả đèn",
+        "bật all lights",
+        "turn on all lights",
+        "bật đèn hết",
+        "mở tất cả đèn lên",
+        "bật sáng hết đèn"
+      ],
+      "action": "all_lights_on",
+      "responses": [
+        "Đã bật tất cả đèn trong nhà"
+      ]
+    },
+    {
+      "tag": "light_all_off",
+      "patterns": [
+        "tắt tất cả đèn",
+        "tắt hết đèn",
+        "tắt toàn bộ đèn",
+        "tắt sạch đèn",
+        "cho tôi tắt tất cả đèn",
+        "tắt hết đèn đi",
+        "tắt toàn bộ đèn giúp tôi",
+        "tắt all lights",
+        "turn off all lights",
+        "tắt đèn hết",
+        "tắt sạch hết đèn",
+        "tắt hết đèn trong nhà"
+      ],
+      "action": "all_lights_off",
+      "responses": [
+        "Đã tắt tất cả đèn trong nhà"
+      ]
+    },
+    {
+      "tag": "door_open",
+      "patterns": [
+        "mở cửa",
+        "mở cửa ra vào",
+        "mở cửa chính",
+        "open door",
+        "mở gate",
+        "cho tôi mở cửa",
+        "mở cửa giúp tôi",
+        "mở cửa ra vào giúp tôi",
+        "mở cửa chính lên",
+        "mở cửa được không",
+        "open the door",
+        "mở cửa đi",
+        "cửa mở"
+      ],
+      "action": "door_open",
+      "responses": [
+        "Đã mở cửa ra vào",
+        "Cửa đã được mở"
+      ]
+    },
+    {
+      "tag": "door_close",
+      "patterns": [
+        "đóng cửa",
+        "đóng cửa ra vào",
+        "đóng cửa chính",
+        "close door",
+        "đóng gate",
+        "cho tôi đóng cửa",
+        "đóng cửa giúp tôi",
+        "đóng cửa ra vào giúp tôi",
+        "đóng cửa chính lại",
+        "đóng cửa được không",
+        "close the door",
+        "đóng cửa lại",
+        "cửa đóng"
+      ],
+      "action": "door_close",
+      "responses": [
+        "Đã đóng cửa ra vào",
+        "Cửa đã được đóng"
+      ]
+    },
+    {
+      "tag": "temperature_check",
+      "patterns": [
+        "nhiệt độ bao nhiêu",
+        "kiểm tra nhiệt độ",
+        "cho tôi biết nhiệt độ",
+        "temperature",
+        "bao nhiêu độ",
+        "nhiệt độ hiện tại",
+        "nhiệt độ là bao nhiêu",
+        "cho biết nhiệt độ",
+        "xem nhiệt độ",
+        "đo nhiệt độ",
+        "nhiệt độ trong phòng",
+        "check temperature",
+        "nhiệt độ thế nào"
+      ],
+      "action": "check_temperature",
+      "responses": [
+        "Đang kiểm tra nhiệt độ...",
+        "Để tôi xem nhiệt độ hiện tại"
+      ]
+    },
+    {
+      "tag": "humidity_check",
+      "patterns": [
+        "độ ẩm bao nhiêu",
+        "kiểm tra độ ẩm",
+        "cho tôi biết độ ẩm",
+        "humidity",
+        "độ ẩm hiện tại",
+        "độ ẩm là bao nhiêu",
+        "cho biết độ ẩm",
+        "xem độ ẩm",
+        "đo độ ẩm",
+        "độ ẩm trong phòng",
+        "check humidity",
+        "độ ẩm thế nào"
+      ],
+      "action": "check_humidity",
+      "responses": [
+        "Đang kiểm tra độ ẩm...",
+        "Để tôi xem độ ẩm hiện tại"
+      ]
+    },
+    {
+      "tag": "status_check",
+      "patterns": [
+        "trạng thái hệ thống",
+        "kiểm tra hệ thống",
+        "tình trạng thiết bị",
+        "status",
+        "hệ thống thế nào",
+        "tình trạng hệ thống",
+        "xem trạng thái",
+        "check status",
+        "hệ thống hoạt động thế nào",
+        "tình trạng các thiết bị",
+        "kiểm tra tình trạng",
+        "xem tình trạng hệ thống"
+      ],
+      "action": "check_status",
+      "responses": [
+        "Đang kiểm tra trạng thái hệ thống..."
+      ]
+    }
+  ]
+}
