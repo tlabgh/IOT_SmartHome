@@ -1,5 +1,5 @@
 {
   "firebase_cred_path": "serviceAccountKey.json",
-  "database_url": "https://iot-smarthome-d03a9-default-rtdb.asia-southeast1.firebasedatabase.app",
+  "database_url": "https://iot-smarthome-63a3c-default-rtdb.asia-southeast1.firebasedatabase.app",
   "esp_base_path": "esp32_1"
 }

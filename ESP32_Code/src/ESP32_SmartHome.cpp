@@ -63,8 +63,8 @@ int wifiMode;           // 0: cấu hình, 1: đã kết nối, 2: mất WiFi
 unsigned long blinkTime = millis();
 
 // ===== FIREBASE CONFIG =====
-#define FIREBASE_HOST "iot-smarthome-d03a9-default-rtdb.asia-southeast1.firebasedatabase.app"
-#define FIREBASE_AUTH "AIzaSyByP2XPL9NUEO33aYh7p3N67IeKjVG0YUA"
+#define FIREBASE_HOST "iot-smarthome-63a3c-default-rtdb.asia-southeast1.firebasedatabase.app"
+#define FIREBASE_AUTH "AIzaSyBc1VcD0bwBuoe8QmhGONv2h9lvx_U28Hg"
 #define FB_BASE_PATH  "/esp32_1"
 
 // Firebase objects

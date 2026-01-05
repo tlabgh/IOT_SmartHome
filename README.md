@@ -70,7 +70,7 @@ https://tlabgh.github.io/IOT_SmartHome/
 
 ### 🔐 Cấu hình Firebase cho Web:
 #### 1. Firebase Realtime Database:
-- Database URL: `iot-smarthome-d03a9-default-rtdb.asia-southeast1.firebasedatabase.app`
+- Database URL: `iot-smarthome-63a3c-default-rtdb.asia-southeast1.firebasedatabase.app`
 - Region: `asia-southeast1` (Singapore)
 - Database rules: Test mode (cho phép read/write)
 
@@ -221,7 +221,7 @@ python voice_assistant_firebase.py
 
 1. **Lấy Service Account Key:**
    - Vào https://console.firebase.google.com/
-   - Chọn project `iot-smarthome-d03a9`
+   - Chọn project `iot-smarthome-63a3c`
    - ⚙️ Settings → Project settings → Service accounts
    - Click **Generate new private key** → Download file JSON
    - Đổi tên thành `serviceAccountKey.json`
@@ -337,8 +337,8 @@ print(f"Độ ẩm: {data['hum']}%")
 ESP32 tích hợp Firebase Realtime Database để đồng bộ trạng thái và nhận lệnh điều khiển từ xa:
 
 ### Cấu hình Firebase:
-- **Database URL**: `iot-smarthome-d03a9-default-rtdb.asia-southeast1.firebasedatabase.app`
-- **API Key**: `AIzaSyByP2XPL9NUEO33aYh7p3N67IeKjVG0YUA`
+- **Database URL**: `iot-smarthome-63a3c-default-rtdb.asia-southeast1.firebasedatabase.app`
+- **API Key**: `AIzaSyBc1VcD0bwBuoe8QmhGONv2h9lvx_U28Hg`
 - **Base Path**: `/esp32_1`
 - **Region**: asia-southeast1 (Singapore)
 
@@ -379,18 +379,18 @@ ESP32 tích hợp Firebase Realtime Database để đồng bộ trạng thái v�
 ### Cấu hình trong code:
 ```cpp
 // ESP32_Code/src/ESP32_SmartHome.cpp
-#define FIREBASE_HOST "iot-smarthome-d03a9-default-rtdb.asia-southeast1.firebasedatabase.app"
-#define FIREBASE_AUTH "AIzaSyByP2XPL9NUEO33aYh7p3N67IeKjVG0YUA"
+#define FIREBASE_HOST "iot-smarthome-63a3c-default-rtdb.asia-southeast1.firebasedatabase.app"
+#define FIREBASE_AUTH "AIzaSyBc1VcD0bwBuoe8QmhGONv2h9lvx_U28Hg"
 #define FB_BASE_PATH  "/esp32_1"
 ```
 
 ```javascript
 // docs/config.js
 window.firebaseConfig = {
-  apiKey: "AIzaSyByP2XPL9NUEO33aYh7p3N67IeKjVG0YUA",
-  authDomain: "iot-smarthome-d03a9.firebaseapp.com",
-  databaseURL: "https://iot-smarthome-d03a9-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "iot-smarthome-d03a9",
+  apiKey: "AIzaSyBc1VcD0bwBuoe8QmhGONv2h9lvx_U28Hg",
+  authDomain: "iot-smarthome-63a3c.firebaseapp.com",
+  databaseURL: "https://iot-smarthome-63a3c-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "iot-smarthome-63a3c",
   // ...
 };
 window.espBasePath = "esp32_1";
